@@ -11,68 +11,68 @@
 Код виконується, і метод delete видаляє задану пару ключ-значення в таблиці HashTable.
 '''
 
-# class HashTable:
-#     def __init__(self, size):
-#         self.size = size
-#         self.table = [[] for _ in range(self.size)]
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [[] for _ in range(self.size)]
 
-#     def hash_function(self, key):
-#         return hash(key) % self.size         # (див. нижче) функція, яка приймає ключ і повертає індекс у хеш-таблиці. Він використовує вбудовану функцію hash Python, щоб отримати хеш ключа, а потім бере остачу від ділення цього хешу на розмір таблиці self.size. використовує вбудовану хеш-функцію Python для створення хешу ключа, атрибут size обмежує значення хешу розміром таблиці.
+    def hash_function(self, key):
+        return hash(key) % self.size         # (див. нижче) функція, яка приймає ключ і повертає індекс у хеш-таблиці. Він використовує вбудовану функцію hash Python, щоб отримати хеш ключа, а потім бере остачу від ділення цього хешу на розмір таблиці self.size. використовує вбудовану хеш-функцію Python для створення хешу ключа, атрибут size обмежує значення хешу розміром таблиці.
 
-#     def insert(self, key, value):
-#         key_hash = self.hash_function(key)
-#         key_value = [key, value]
+    def insert(self, key, value):
+        key_hash = self.hash_function(key)
+        key_value = [key, value]
 
-#         if self.table[key_hash] is None:
-#             self.table[key_hash] = list([key_value])
-#             return True
-#         else:
-#             for pair in self.table[key_hash]:
-#                 if pair[0] == key:
-#                     pair[1] = value
-#                     return True
-#             self.table[key_hash].append(key_value)
-#             return True
+        if self.table[key_hash] is None:
+            self.table[key_hash] = list([key_value])
+            return True
+        else:
+            for pair in self.table[key_hash]:
+                if pair[0] == key:
+                    pair[1] = value
+                    return True
+            self.table[key_hash].append(key_value)
+            return True
 
-#     def get(self, key):
-#         key_hash = self.hash_function(key)
-#         if self.table[key_hash] is not None:
-#             for pair in self.table[key_hash]:
-#                 if pair[0] == key:
-#                     return pair[1]
-#         return None
+    def get(self, key):
+        key_hash = self.hash_function(key)
+        if self.table[key_hash] is not None:
+            for pair in self.table[key_hash]:
+                if pair[0] == key:
+                    return pair[1]
+        return None
     
-#     def delete(self, key):
-#         key_hash = self.hash_function(key)
-#         bucket = self.table[key_hash]      # Працює не з None, а з підсписком bucket, який завжди є списком (може бути порожній).
-#         for i, pair in enumerate(bucket):
-#             if pair[0] == key:             # Шукає потрібний ключ у цьому списку.
-#                 del bucket[i]              # Видаляє лише пару [key, value], а не всю "комірку".
-#                 return True
-#         return False
+    def delete(self, key):
+        key_hash = self.hash_function(key)
+        bucket = self.table[key_hash]      # Працює не з None, а з підсписком bucket, який завжди є списком (може бути порожній).
+        for i, pair in enumerate(bucket):
+            if pair[0] == key:             # Шукає потрібний ключ у цьому списку.
+                del bucket[i]              # Видаляє лише пару [key, value], а не всю "комірку".
+                return True
+        return False
 
     
-# # Тестуємо нашу хеш-таблицю:
-# H = HashTable(5)
-# print(H.table)
-# '''[[], [], [], [], []]'''
+# Тестуємо нашу хеш-таблицю:
+H = HashTable(5)
+print(H.table)
+'''[[], [], [], [], []]'''
 
-# H.insert("apple", 10)
-# H.insert("orange", 20)
-# H.insert("banana", 30)
+H.insert("apple", 10)
+H.insert("orange", 20)
+H.insert("banana", 30)
 
-# print(H.table)
-# '''
-# [[['banana', 30]], [], [['orange', 20]], [['apple', 10]], []]
-# '''
+print(H.table)
+'''
+[[['banana', 30]], [], [['orange', 20]], [['apple', 10]], []]
+'''
 
-# print(H.get("apple"))   # Виведе: 10
-# print(H.get("orange"))  # Виведе: 20
-# print(H.get("banana"))  # Виведе: 30
+print(H.get("apple"))   # Виведе: 10
+print(H.get("orange"))  # Виведе: 20
+print(H.get("banana"))  # Виведе: 30
 
-# H.delete("apple")
-# H.delete("grape")
-# print(H.table)
+H.delete("apple")
+H.delete("grape")
+print(H.table)
 
 '''
 [[['banana', 30]], [], [], [['orange', 20]], []]
@@ -92,32 +92,32 @@
 Другим елементом є "верхня межа" (найменший елемент, який є більшим або рівним заданому значенню).
 '''
 
-# def binary_search(arr, x):
-#     low = 0
-#     high = len(arr) - 1
-#     step = 0
-#     upper_bound = None
+def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+    step = 0
+    upper_bound = None
 
-#     while low <= high:
-#         step += 1
-#         mid = (low + high) // 2
+    while low <= high:
+        step += 1
+        mid = (low + high) // 2
 
-#         if arr[mid] < x:
-#             low = mid + 1
-#         else:
-#             # записуємо можливу верхню межу
-#             upper_bound = arr[mid]
-#             high = mid - 1
+        if arr[mid] < x:
+            low = mid + 1
+        else:
+            # записуємо можливу верхню межу
+            upper_bound = arr[mid]
+            high = mid - 1
 
-#     return (step, upper_bound)
+    return (step, upper_bound)
 
 
 
-# arr = [2.4, 3.1, 4.5, 10.6, 40.3]
-# x = 11
-# result = binary_search(arr, x)
+arr = [2.4, 3.1, 4.5, 10.6, 40.3]
+x = 11
+result = binary_search(arr, x)
 
-# print(result)
+print(result)
 
 
 
